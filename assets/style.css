@@ -579,12 +579,8 @@ em { font-style: normal; color: var(--gold); }
 .cd-eyebrow { color: color-mix(in srgb, var(--paper) 55%, transparent); margin-bottom: 14px; }
 .cd-title { font-size: clamp(24px, 3vw, 32px); font-weight: 700; line-height: 1.3; margin-bottom: 10px; }
 .cd-text { font-size: 14px; color: color-mix(in srgb, var(--paper) 62%, transparent); }
-.cd-address {
-  margin: 26px 0 22px; padding: 16px 18px; border-radius: 14px;
-  background: color-mix(in srgb, var(--paper) 6%, transparent);
-  font-family: var(--display); font-weight: 600; font-size: clamp(17px, 2.2vw, 21px); overflow-wrap: anywhere;
-  user-select: all;
-}
+.cd-text { margin-bottom: 28px; }
+.cd-note { margin-top: 18px; font-size: 12.5px; color: color-mix(in srgb, var(--paper) 45%, transparent); }
 .cd-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .cd-btn {
   display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 999px;

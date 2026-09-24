@@ -151,7 +151,6 @@
     $$('[data-contact]').forEach((el) => el.addEventListener('click', (e) => {
       e.preventDefault();
       const a = address();
-      $('.cd-address', dialog).textContent = a;
       $('.cd-mail', dialog).href = `mailto:${a}?subject=${subject}`;
       copyBtn.textContent = 'アドレスをコピー'; copyBtn.classList.remove('is-done');
       root.classList.add('dialog-open');
@@ -166,7 +165,11 @@
     });
     copyBtn.addEventListener('click', async () => {
       try { await navigator.clipboard.writeText(address()); }
-      catch { const r = document.createRange(); r.selectNodeContents($('.cd-address', dialog)); getSelection().removeAllRanges(); getSelection().addRange(r); document.execCommand('copy'); }
+      catch { // older browsers / non-secure contexts
+        const ta = document.createElement('textarea');
+        ta.value = address(); ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0';
+        dialog.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      }
       copyBtn.textContent = 'コピーしました'; copyBtn.classList.add('is-done');
     });
   }
