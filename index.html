@@ -316,7 +316,7 @@
           <dl class="about-facts rv">
             <div><dt>Company</dt><dd>ステイゴールド合同会社</dd></div>
             <div><dt>Business</dt><dd>Web制作 / iOSアプリ / AI活用支援</dd></div>
-            <div><dt>Email</dt><dd><a href="mailto:wire04japan@gmail.com">wire04japan@gmail.com</a></dd></div>
+            <div><dt>Contact</dt><dd><a href="#contact" data-contact>連絡先を表示する →</a></dd></div>
             <div><dt>Social</dt><dd><a href="https://x.com/takuyan_n_n" target="_blank" rel="noopener">X @takuyan_n_n</a> ・ <a href="https://note.com/takuyan_sauna" target="_blank" rel="noopener">note</a></dd></div>
           </dl>
         </div>
@@ -338,9 +338,9 @@
         <div class="cta-text rv">
           <p class="cta-jp">まずは、話しませんか。</p>
           <p>「こういうこと、できる？」の一通で大丈夫です。24時間以内に返信します。</p>
-          <a class="cta-mail" href="mailto:wire04japan@gmail.com">wire04japan@gmail.com</a>
+          <a class="cta-mail" href="#contact" data-contact>連絡先を表示する</a>
         </div>
-        <a class="cta-circle" href="mailto:wire04japan@gmail.com?subject=%E3%81%94%E7%9B%B8%E8%AB%87" data-magnetic="0.4">
+        <a class="cta-circle" href="#contact" data-contact data-magnetic="0.4">
           <span class="cta-circle-fill" aria-hidden="true"></span>
           <span class="cta-circle-label">Say hello <span aria-hidden="true">→</span></span>
         </a>
@@ -356,12 +356,24 @@
     <span class="footer-links">
       <a href="https://x.com/takuyan_n_n" target="_blank" rel="noopener">X</a>
       <a href="https://note.com/takuyan_sauna" target="_blank" rel="noopener">note</a>
-      <a href="mailto:wire04japan@gmail.com">Email</a>
+      <a href="#contact" data-contact>Contact</a>
       <a href="#top">Top ↑</a>
     </span>
   </div>
   <p class="footer-word" aria-hidden="true">STAYGOLD</p>
 </footer>
+
+<dialog class="contact-dialog" aria-labelledby="contact-dialog-title">
+  <button class="cd-close" type="button" aria-label="閉じる">×</button>
+  <p class="mono cd-eyebrow">( Contact )</p>
+  <h2 class="cd-title" id="contact-dialog-title">まずは、話しませんか。</h2>
+  <p class="cd-text">「こういうこと、できる？」の一通で大丈夫です。24時間以内に返信します。</p>
+  <p class="cd-address" aria-live="polite"></p>
+  <div class="cd-actions">
+    <a class="cd-btn cd-btn--solid cd-mail" href="#">メールを作成 <span aria-hidden="true">→</span></a>
+    <button class="cd-btn cd-copy" type="button">アドレスをコピー</button>
+  </div>
+</dialog>
 
 </body>
 </html>

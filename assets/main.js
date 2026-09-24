@@ -141,6 +141,36 @@
   });
   onScroll();
 
+  /* ---------- Contact: address is built on demand, never written in the page ---------- */
+  const dialog = $('.contact-dialog');
+  if (dialog && typeof dialog.showModal === 'function') {
+    const address = () => ['wire04japan', ['gmail', 'com'].join('.')].join('@');
+    const subject = encodeURIComponent('ご相談');
+    const copyBtn = $('.cd-copy', dialog);
+    const close = () => dialog.close();
+    $$('[data-contact]').forEach((el) => el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const a = address();
+      $('.cd-address', dialog).textContent = a;
+      $('.cd-mail', dialog).href = `mailto:${a}?subject=${subject}`;
+      copyBtn.textContent = 'アドレスをコピー'; copyBtn.classList.remove('is-done');
+      root.classList.add('dialog-open');
+      dialog.showModal();
+    }));
+    dialog.addEventListener('close', () => root.classList.remove('dialog-open'));
+    $('.cd-close', dialog).addEventListener('click', close);
+    dialog.addEventListener('click', (e) => { // backdrop only, not the dialog's own padding
+      if (e.target !== dialog) return;
+      const r = dialog.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
+    });
+    copyBtn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(address()); }
+      catch { const r = document.createRange(); r.selectNodeContents($('.cd-address', dialog)); getSelection().removeAllRanges(); getSelection().addRange(r); document.execCommand('copy'); }
+      copyBtn.textContent = 'コピーしました'; copyBtn.classList.add('is-done');
+    });
+  }
+
   /* ---------- Desktop-only pointer interactions ---------- */
   if (!isRich()) return;
 
