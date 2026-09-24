@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STAYGOLD — Web / iOS / AI Studio</title>
+<meta name="description" content="ステイゴールド合同会社。企画から公開まで一人で完結する、Web・iOSアプリ・AI活用のスタジオ。">
+<style>
+  :root{
+    --bg:#0a0a0c; --bg2:#111114; --card:#16161a; --line:rgba(255,255,255,.08);
+    --text:#f5f5f7; --muted:#9a9aa3; --dim:#6e6e76;
+    --accent:#e8c15a; --accent2:#7aa2ff;
+    --radius:20px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(10,10,12,.7);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:700;letter-spacing:.18em;font-size:13px}
+  .brand em{color:var(--accent);font-style:normal}
+  .nav-cta{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:8px 18px;transition:.25s}
+  .nav-cta:hover{background:var(--text);color:var(--bg)}
+
+  /* hero */
+  .hero{min-height:92vh;display:flex;align-items:center;position:relative}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(ellipse 60% 45% at 75% 20%,rgba(122,162,255,.14),transparent 60%),
+    radial-gradient(ellipse 55% 45% at 20% 85%,rgba(232,193,90,.10),transparent 60%);pointer-events:none}
+  .eyebrow{font-size:13px;letter-spacing:.28em;color:var(--accent);font-weight:600;margin-bottom:22px}
+  h1{font-size:clamp(40px,7.5vw,84px);font-weight:800;line-height:1.12;letter-spacing:-.02em}
+  h1 .grad{background:linear-gradient(92deg,#e8c15a 0%,#f0e2b6 45%,#7aa2ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin-top:26px;max-width:560px;font-size:16px;color:var(--muted)}
+  .hero-ctas{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 30px;font-size:14px;font-weight:600;transition:.25s}
+  .btn-solid{background:var(--text);color:var(--bg)}
+  .btn-solid:hover{background:var(--accent)}
+  .btn-ghost{border:1px solid var(--line);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--text)}
+
+  /* section base */
+  section{padding:110px 0}
+  .kicker{font-size:12px;letter-spacing:.3em;color:var(--dim);font-weight:600;margin-bottom:14px}
+  h2{font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-.01em;line-height:1.3;margin-bottom:14px}
+  .sec-lead{color:var(--muted);font-size:15px;max-width:560px;margin-bottom:56px}
+
+  /* capabilities */
+  .caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+  .cap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;transition:.3s}
+  .cap:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.2)}
+  .cap .n{font-size:12px;color:var(--dim);letter-spacing:.2em;margin-bottom:16px}
+  .cap h3{font-size:19px;font-weight:700;margin-bottom:10px}
+  .cap p{font-size:13.5px;color:var(--muted)}
+
+  /* works */
+  .work{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:22px;transition:.3s}
+  .work:hover{border-color:rgba(255,255,255,.22);transform:translateY(-3px)}
+  .work-visual{min-height:240px;display:flex;align-items:center;justify-content:center;font-size:64px;position:relative}
+  .work-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.04),transparent)}
+  .wv-1{background:radial-gradient(circle at 30% 30%,#1c2b52,#101322)}
+  .wv-2{background:radial-gradient(circle at 70% 30%,#3a2b12,#141008)}
+  .wv-3{background:radial-gradient(circle at 30% 70%,#0f2e1f,#0a1410)}
+  .wv-4{background:radial-gradient(circle at 70% 70%,#33121c,#160a0e)}
+  .wv-5{background:radial-gradient(circle at 50% 30%,#1f2437,#0d0f18)}
+  .wv-6{background:radial-gradient(circle at 40% 60%,#282133,#120e18)}
+  .work-body{padding:38px 34px;display:flex;flex-direction:column;justify-content:center}
+  .chip{display:inline-flex;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--accent);border:1px solid rgba(232,193,90,.35);border-radius:999px;padding:4px 12px;margin-bottom:16px;align-self:flex-start}
+  .work-body h3{font-size:22px;font-weight:800;margin-bottom:10px;letter-spacing:-.01em}
+  .work-body p{font-size:13.5px;color:var(--muted)}
+  .work-link{margin-top:18px;font-size:13px;font-weight:700;color:var(--accent2)}
+  .work-link span{display:inline-block;transition:.25s}
+  .work:hover .work-link span{transform:translateX(5px)}
+  @media(max-width:720px){.work{grid-template-columns:1fr}.work-visual{min-height:150px;font-size:48px}}
+
+  /* numbers */
+  .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+  .num-card{border:1px solid var(--line);border-radius:var(--radius);padding:36px 24px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
+  .num-card .v{font-size:clamp(30px,4vw,44px);font-weight:800;letter-spacing:-.02em;background:linear-gradient(92deg,#fff,#b9c6e8);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .num-card .l{font-size:12px;color:var(--muted);margin-top:8px}
+
+  /* about + contact */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  @media(max-width:720px){.about-grid{grid-template-columns:1fr}}
+  .about-grid p{color:var(--muted);font-size:14.5px}
+  .fact{display:flex;justify-content:space-between;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .fact .k{color:var(--dim)}
+  .contact{text-align:center;padding:120px 0 140px;position:relative}
+  .contact::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 50% at 50% 60%,rgba(232,193,90,.08),transparent 70%);pointer-events:none}
+  .contact h2{font-size:clamp(30px,5vw,54px)}
+  .contact p{color:var(--muted);margin:18px 0 40px;font-size:15px}
+  .mail{font-size:13px;color:var(--dim);margin-top:22px}
+  .mail a{color:var(--muted);border-bottom:1px solid var(--line)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;font-size:12px;color:var(--dim)}
+
+  /* reveal animation */
+  .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .rv.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand">STAY<em>GOLD</em></div>
+    <a class="nav-cta" href="mailto:wire04japan@gmail.com?subject=%E3%81%94%E7%9B%B8%E8%AB%87">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">WEB × iOS × AI STUDIO</div>
+    <h1>つくって、届けるまで。<br><span class="grad">ぜんぶ、ひとつのスタジオで。</span></h1>
+    <p>ステイゴールド合同会社は、Webサイト・iOSアプリ・AI活用を企画から公開まで一気通貫で手がけるスタジオです。小さなチームだから、速い。AIを使い倒すから、安い。</p>
+    <div class="hero-ctas">
+      <a class="btn btn-solid" href="#works">実績を見る</a>
+      <a class="btn btn-ghost" href="mailto:wire04japan@gmail.com?subject=%E3%81%94%E7%9B%B8%E8%AB%87">相談してみる</a>
+    </div>
+  </div>
+</div>
+
+<section id="caps">
+  <div class="wrap">
+    <div class="kicker rv">CAPABILITIES</div>
+    <h2 class="rv">できること</h2>
+    <p class="sec-lead rv">「サイトはA社、アプリはB社、AIはよく分からない」を、ここひとつに。</p>
+    <div class="caps">
+      <div class="cap rv"><div class="n">01</div><h3>Web Design & Build</h3><p>コーポレートサイト、店舗サイト、LP、Webアプリ。設計・文章・デザイン・実装・公開までワンストップ。リニューアルも対応。</p></div>
+      <div class="cap rv"><div class="n">02</div><h3>iOS App Development</h3><p>iPhone・Apple Watchアプリを企画からApp Store公開まで。審査対応、公開後のアップデート運用も自社で完結。</p></div>
+      <div class="cap rv"><div class="n">03</div><h3>AI Integration</h3><p>ChatGPT・ClaudeなどのAIを業務に実装。資料作成、リサーチ、定型業務の自動化。「何から始める？」の段階からOK。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="works" style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker rv">SELECTED WORKS</div>
+    <h2 class="rv">実績</h2>
+    <p class="sec-lead rv">すべて実際に公開・稼働しているプロダクトです。</p>
+
+    <a class="work rv" href="https://naritanow.com" target="_blank" rel="noopener">
+      <div class="work-visual wv-1">✈️</div>
+      <div class="work-body">
+        <span class="chip">WEB SERVICE — LIVE</span>
+        <h3>NARITA NOW</h3>
+        <p>成田空港の乗り継ぎ客向け観光案内サービス。滞在時間を入力すると最適な過ごし方を提案する、多言語対応のWebアプリ。本番稼働中。</p>
+        <div class="work-link">naritanow.com <span>→</span></div>
+      </div>
+    </a>
+
+    <a class="work rv" href="https://apps.apple.com/jp/app/id6760950311" target="_blank" rel="noopener">
+      <div class="work-visual wv-2">⌚️</div>
+      <div class="work-body">
+        <span class="chip">iOS APP — APP STORE</span>
+        <h3>サログ</h3>
+        <p>サウナ体験を記録するiPhone＋Apple Watchアプリ。企画・開発・審査通過・継続アップデートまで一人で運用。App Store公開中。</p>
+        <div class="work-link">View on App Store <span>→</span></div>
+      </div>
+    </a>
+
+    <a class="work rv" href="https://takuyan003.github.io/wc2026-ensei-navi/" target="_blank" rel="noopener">
+      <div class="work-visual wv-3">🏟️</div>
+      <div class="work-body">
+        <span class="chip">PWA — LIVE</span>
+        <h3>W杯遠征ナビ 2026</h3>
+        <p>ワールドカップ現地観戦者向けガイド。電波のないスタジアムでも動くオフラインファーストのPWAとして設計・開発。</p>
+        <div class="work-link">Open site <span>→</span></div>
+      </div>
+    </a>
+
+    <a class="work rv" href="https://staygold-demo.vercel.app" target="_blank" rel="noopener">
+      <div class="work-visual wv-4">🏠</div>
+      <div class="work-body">
+        <span class="chip">CLIENT DEMO</span>
+        <h3>不動産会社サイト</h3>
+        <p>不動産会社向けホームページのデモ。物件紹介から問い合わせ導線まで、業種特化の構成をスピード提案するための制作例。</p>
+        <div class="work-link">View demo <span>→</span></div>
+      </div>
+    </a>
+
+    <a class="work rv" href="https://local-web-demo.pages.dev" target="_blank" rel="noopener">
+      <div class="work-visual wv-5">🏪</div>
+      <div class="work-body">
+        <span class="chip">CLIENT DEMO</span>
+        <h3>地域事業者向けテンプレート</h3>
+        <p>飲食・整備工場・士業など4業種分のサイトひな形。「うちの業種ならこうなる」を最初の打ち合わせで見せられる営業ツール。</p>
+        <div class="work-link">View demo <span>→</span></div>
+      </div>
+    </a>
+
+    <a class="work rv" href="https://note.com/takuyan_sauna" target="_blank" rel="noopener">
+      <div class="work-visual wv-6">♨️</div>
+      <div class="work-body">
+        <span class="chip">MEDIA</span>
+        <h3>note・コンテンツ発信</h3>
+        <p>サウナ・旅をテーマにした記事を継続発信。X（フォロワー2万）と合わせて、届く文章とコンテンツ企画を実践中。</p>
+        <div class="work-link">Read on note <span>→</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker rv">NUMBERS</div>
+    <h2 class="rv">数字で見る</h2>
+    <div class="nums" style="margin-top:48px">
+      <div class="num-card rv"><div class="v">20K+</div><div class="l">X followers — @takuyan_n_n</div></div>
+      <div class="num-card rv"><div class="v">6+</div><div class="l">公開中のプロダクト</div></div>
+      <div class="num-card rv"><div class="v">1</div><div class="l">App Store 公開アプリ</div></div>
+      <div class="num-card rv"><div class="v">20+</div><div class="l">公開記事（note / blog）</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <div class="kicker rv">ABOUT</div>
+        <h2 class="rv">小さく、速く、<br>ぜんぶやる。</h2>
+        <p class="rv" style="margin-top:10px">大きな制作会社の分業ではなく、企画した本人がデザインし、実装し、公開後も運用する。だから話が早く、意思決定が速く、コストが軽い。AIを日常的に使い倒すスタジオとして、その使い方ごとお客様の業務に持ち込みます。</p>
+      </div>
+      <div class="rv">
+        <div class="fact"><span class="k">会社名</span><span>ステイゴールド合同会社</span></div>
+        <div class="fact"><span class="k">事業</span><span>Web制作 / iOSアプリ / AI活用支援</span></div>
+        <div class="fact"><span class="k">Email</span><span>wire04japan@gmail.com</span></div>
+        <div class="fact"><span class="k">SNS</span><span>X @takuyan_n_n ・ note</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contact">
+  <div class="wrap">
+    <h2 class="rv">まずは、話しませんか。</h2>
+    <p class="rv">「こういうこと、できる？」の一通で大丈夫です。24時間以内に返信します。</p>
+    <a class="btn btn-solid rv" href="mailto:wire04japan@gmail.com?subject=%E3%81%94%E7%9B%B8%E8%AB%87">メールで相談する</a>
+    <div class="mail rv"><a href="mailto:wire04japan@gmail.com">wire04japan@gmail.com</a></div>
+  </div>
+</div>
+
+<footer>© 2026 STAYGOLD LLC — Web / iOS / AI Studio</footer>
+
+<script>
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
