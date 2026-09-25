@@ -141,21 +141,70 @@
   });
   onScroll();
 
-  /* ---------- Contact: address is built on demand, never written in the page ---------- */
+  /* ---------- Contact: address is built on demand, never written in the page ----------
+     Clicking tries to open the mail app. The address is also copied in the same
+     click (Safari only allows clipboard writes inside the gesture); if the page never
+     loses focus, we assume no mail app opened and tell the visitor it was copied. */
+  const address = () => ['wire04japan', ['gmail', 'com'].join('.')].join('@');
+  const mailto = () => `mailto:${address()}?subject=${encodeURIComponent('ご相談')}`;
+  const toast = $('.toast');
+  let toastTimer;
+  const showToast = (html) => {
+    if (!toast) return;
+    (document.querySelector('dialog[open]') || document.body).appendChild(toast); // stay above an open dialog
+    toast.innerHTML = html;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-on'), 6000);
+  };
+  const copyAddress = () => {
+    const a = address();
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = a; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0';
+      (document.querySelector('dialog[open]') || document.body).appendChild(ta);
+      ta.select(); document.execCommand('copy'); ta.remove();
+    };
+    try { navigator.clipboard.writeText(a).catch(fallback); } catch { fallback(); }
+  };
+  const openMailOrCopy = (onFallback) => {
+    copyAddress();
+    let left = false;
+    const mark = () => { left = true; };
+    addEventListener('blur', mark, { once: true });
+    document.addEventListener('visibilitychange', mark, { once: true });
+    location.href = mailto();
+    setTimeout(() => {
+      removeEventListener('blur', mark);
+      document.removeEventListener('visibilitychange', mark);
+      if (!left) onFallback();
+    }, 1500);
+  };
+  const copiedMessage = () => `メールソフトが開かなかったため、アドレスをコピーしました<b>${address()}</b>`;
+
+  // "連絡先を表示する" links: straight to the mail app, or copy
+  $$('[data-contact="direct"]').forEach((el) => el.addEventListener('click', (e) => {
+    e.preventDefault();
+    openMailOrCopy(() => showToast(copiedMessage()));
+  }));
+
+  // other contact links open the dialog
   const dialog = $('.contact-dialog');
   if (dialog && typeof dialog.showModal === 'function') {
-    const address = () => ['wire04japan', ['gmail', 'com'].join('.')].join('@');
-    const subject = encodeURIComponent('ご相談');
     const copyBtn = $('.cd-copy', dialog);
     const close = () => dialog.close();
-    $$('[data-contact]').forEach((el) => el.addEventListener('click', (e) => {
+    const resetCopy = () => { copyBtn.textContent = 'アドレスをコピー'; copyBtn.classList.remove('is-done'); };
+    $$('[data-contact]:not([data-contact="direct"])').forEach((el) => el.addEventListener('click', (e) => {
       e.preventDefault();
-      const a = address();
-      $('.cd-mail', dialog).href = `mailto:${a}?subject=${subject}`;
-      copyBtn.textContent = 'アドレスをコピー'; copyBtn.classList.remove('is-done');
+      $('.cd-mail', dialog).href = mailto();
+      resetCopy();
       root.classList.add('dialog-open');
       dialog.showModal();
     }));
+    $('.cd-mail', dialog).addEventListener('click', (e) => {
+      e.preventDefault();
+      openMailOrCopy(() => { copyBtn.textContent = 'コピーしました'; copyBtn.classList.add('is-done'); showToast(copiedMessage()); });
+    });
     dialog.addEventListener('close', () => root.classList.remove('dialog-open'));
     $('.cd-close', dialog).addEventListener('click', close);
     dialog.addEventListener('click', (e) => { // backdrop only, not the dialog's own padding
@@ -163,13 +212,8 @@
       const r = dialog.getBoundingClientRect();
       if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
     });
-    copyBtn.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(address()); }
-      catch { // older browsers / non-secure contexts
-        const ta = document.createElement('textarea');
-        ta.value = address(); ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0';
-        dialog.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
-      }
+    copyBtn.addEventListener('click', () => {
+      copyAddress();
       copyBtn.textContent = 'コピーしました'; copyBtn.classList.add('is-done');
     });
   }

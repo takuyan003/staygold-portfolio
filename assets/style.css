@@ -596,3 +596,15 @@ em { font-style: normal; color: var(--gold); }
 .is-rich.dialog-open a, .is-rich.dialog-open button { cursor: pointer; }
 .dialog-open .cursor { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .contact-dialog[open] { animation: none; } }
+
+/* toast — shown when the mail app did not open and the address was copied */
+.toast {
+  position: fixed; left: 50%; bottom: max(24px, env(safe-area-inset-bottom)); z-index: 400;
+  width: max-content; max-width: calc(100vw - 32px);
+  padding: 14px 20px; border-radius: 16px; background: var(--gold); color: var(--ink);
+  font: 600 14px/1.6 var(--jp); text-align: center; box-shadow: 0 20px 60px -20px rgba(0,0,0,.6);
+  opacity: 0; transform: translate(-50%, 16px); pointer-events: none;
+  transition: opacity .4s var(--ease), transform .5s var(--ease);
+}
+.toast b { display: block; font: 700 17px/1.4 var(--display); overflow-wrap: anywhere; user-select: all; }
+.toast.is-on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
