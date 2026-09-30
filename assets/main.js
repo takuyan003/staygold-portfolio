@@ -260,7 +260,7 @@
 
   // cursor states
   document.addEventListener('pointerover', (e) => {
-    const t = e.target.closest('a, button, [tabindex], [data-cursor]');
+    const t = e.target.closest('a, button, summary, [tabindex], [data-cursor]');
     cursor.classList.toggle('is-view', !!(t && t.dataset.cursor === 'view'));
     cursor.classList.toggle('is-link', !!(t && t.dataset.cursor !== 'view'));
   });

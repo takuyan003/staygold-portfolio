@@ -62,6 +62,7 @@ ol, ul { list-style: none; }
 }
 em { font-style: normal; color: var(--gold); }
 .keep { text-transform: none !important; }
+.mono i { font-style: normal; color: var(--gold); margin: 0 .45em; }
 
 .status-dot {
   display: inline-block; width: 7px; height: 7px; border-radius: 50%;
@@ -103,7 +104,7 @@ em { font-style: normal; color: var(--gold); }
    CURSOR / PREVIEW  (desktop only — enabled via .is-rich)
    ========================================================================== */
 .cursor, .preview { display: none; }
-.is-rich, .is-rich a, .is-rich button, .is-rich [tabindex] { cursor: none; }
+.is-rich, .is-rich a, .is-rich button, .is-rich summary, .is-rich [tabindex] { cursor: none; }
 .is-rich .cursor { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 300; }
 .cursor-dot, .cursor-ring { position: fixed; left: 0; top: 0; border-radius: 50%; will-change: transform; }
 .cursor-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: #fff; mix-blend-mode: difference; }
@@ -341,8 +342,8 @@ em { font-style: normal; color: var(--gold); }
 
 /* facts */
 .facts {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 0 24px;
-  margin-top: clamp(28px, 4vw, 56px); border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 24px;
+  margin-top: 4px; padding-bottom: 6px;
 }
 .facts > div { padding-top: 18px; }
 .facts dt { font: 400 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
@@ -351,9 +352,9 @@ em { font-style: normal; color: var(--gold); }
 .facts > div:nth-child(4) { --d: .18s; } .facts > div:nth-child(5) { --d: .24s; }
 @media (max-width: 900px) {
   .facts { grid-template-columns: 1fr 1fr; gap: 0 20px; }
-  .facts > div { padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .facts > div:first-child { grid-column: 1 / -1; }
+  .facts > div { padding: 14px 0; border-bottom: 1px solid var(--line); }
 }
+@media (max-width: 520px) { .facts { grid-template-columns: 1fr; } }
 
 .project-link {
   display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(28px, 3vw, 44px);
@@ -545,6 +546,70 @@ em { font-style: normal; color: var(--gold); }
 }
 
 /* ==========================================================================
+   SECTION MARK — セクション名を大きく、statement は各セクションのまま
+   ========================================================================== */
+.sec-head { margin-bottom: clamp(28px, 4.2vw, 64px); }
+.sec-head .eyebrow { margin-bottom: clamp(8px, 1.2vw, 16px); }
+.sec-mark {
+  font-family: var(--display); font-weight: 800; font-stretch: 62%;
+  text-transform: uppercase; letter-spacing: -.035em; line-height: .82;
+  font-size: clamp(52px, 8.6vw, 148px);
+  color: color-mix(in srgb, var(--fg) 20%, transparent);
+}
+@supports (-webkit-text-stroke: 1px currentColor) {
+  .sec-mark { color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--fg) 30%, transparent); }
+}
+/* NUMBERS だけ塗りにして、同じ型のまま変化をつける */
+.sec-mark--solid { color: var(--fg); -webkit-text-stroke: 0; }
+
+/* ==========================================================================
+   PROJECT LEDE + DETAILS — 主要情報だけ出し、残りは開閉
+   ========================================================================== */
+.project-lede {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap;
+  margin-top: clamp(28px, 4vw, 56px); padding-top: clamp(18px, 2.4vw, 28px);
+  border-top: 1px solid var(--line);
+}
+.project-what { font-family: var(--jp); font-size: clamp(16px, 1.7vw, 22px); line-height: 1.65; max-width: 34em; }
+.project-state { color: var(--muted); white-space: nowrap; }
+
+.details { margin-top: clamp(10px, 1.4vw, 18px); }
+.details-sum {
+  display: inline-flex; align-items: center; gap: 11px; padding: 10px 0;
+  color: var(--muted); list-style: none; cursor: pointer; transition: color .4s var(--ease);
+}
+.details-sum::-webkit-details-marker { display: none; }
+.details-sum:hover, .details[open] .details-sum { color: var(--fg); }
+.details-ico { position: relative; width: 11px; height: 11px; flex: none; }
+.details-ico::before, .details-ico::after {
+  content: ""; position: absolute; left: 0; top: 5px; width: 11px; height: 1px; background: currentColor;
+  transition: transform .45s var(--ease);
+}
+.details-ico::after { transform: rotate(90deg); }
+.details[open] .details-ico::after { transform: rotate(0deg); }
+.details[open] .facts { animation: fx .5s var(--ease); }
+@keyframes fx { from { opacity: 0; transform: translateY(-8px); } }
+
+/* ==========================================================================
+   ABOUT KEYWORDS
+   ========================================================================== */
+.kw {
+  margin-top: clamp(64px, 9vw, 130px);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 clamp(20px, 3vw, 48px);
+}
+.kw li { display: flex; align-items: baseline; gap: 14px; padding: clamp(18px, 2.2vw, 30px) 0; border-top: 1px solid var(--line); }
+.kw-i { color: var(--muted); flex: none; }
+.kw-w {
+  font-family: var(--display); font-weight: 800; font-stretch: 70%;
+  text-transform: uppercase; letter-spacing: -.03em; line-height: .92;
+  font-size: clamp(23px, 3.3vw, 52px);
+}
+.kw li:nth-child(2) { --d: .06s; } .kw li:nth-child(3) { --d: .12s; }
+.kw li:nth-child(4) { --d: .18s; } .kw li:nth-child(5) { --d: .24s; }
+@media (max-width: 900px) { .kw { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .kw { grid-template-columns: 1fr; } .kw-w { font-size: 30px; } }
+
+/* ==========================================================================
    REDUCED MOTION
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
@@ -555,6 +620,7 @@ em { font-style: normal; color: var(--gold); }
   .js .hero-jp, .js .hero-bottom, .js .hero-top { opacity: 1; }
   .intro-text .ch { opacity: 1; }
   .marquee-track { animation: none; }
+  .details[open] .facts { animation: none; }
 }
 .hero-bottom, .hero-top { filter: opacity(var(--hf, 1)); }
 
