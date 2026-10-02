@@ -362,6 +362,16 @@ em { font-style: normal; color: var(--gold); }
   transition: background-color .4s var(--ease), color .4s var(--ease), border-color .4s;
 }
 .project-link:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+/* 派生デモへの控えめなリンク。主ボタンの横（狭い画面では下）に置く */
+.project-alt {
+  display: inline-flex; align-items: baseline; gap: 10px; margin: 18px 0 0 22px;
+  font-family: var(--jp); font-size: 13px; color: var(--muted);
+  text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px;
+  transition: color .4s var(--ease), text-decoration-color .4s var(--ease);
+}
+.project-alt .mono { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.project-alt:hover { color: var(--fg); text-decoration-color: currentColor; }
+@media (max-width: 700px) { .project-alt { display: flex; margin-left: 0; } }
 
 /* ==========================================================================
    HUMAN × AI
