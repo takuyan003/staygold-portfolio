@@ -291,6 +291,7 @@ em { font-style: normal; color: var(--gold); }
 .stage--salog  { --stage: radial-gradient(120% 120% at 70% 20%, #8a3a14 0%, #3a170a 50%, #1c0b05 100%); }
 .stage--navi   { --stage: radial-gradient(120% 120% at 30% 80%, #2446a8 0%, #122460 50%, #0a1433 100%); }
 .stage--hiyori { --stage: radial-gradient(120% 120% at 60% 30%, #f6f1e7 0%, #d9ceba 60%, #c6b89f 100%); }
+.stage--keiyo  { --stage: radial-gradient(120% 120% at 40% 25%, #f2f5f8 0%, #c9d3de 60%, #aab8c7 100%); }
 .stage--note   { --stage: radial-gradient(120% 120% at 40% 60%, #2b333c 0%, #181c21 60%, #0f1114 100%); }
 
 .stage-word {
